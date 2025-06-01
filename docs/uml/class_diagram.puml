@@ -1,0 +1,45 @@
+@startuml Skin Cancer Prediction - Class Diagram
+
+class Flask {
+  + __init__()
+  + route()
+  + run()
+}
+
+class SkinCancerPredictor {
+  - app: Flask
+  - lesion_classes_dict: Dict
+  + index()
+  + upload()
+  + model_predict(img_path: str): str
+}
+
+class EfficientNetModel {
+  - weights: str
+  - input_shape: Tuple
+  - model: Model
+  + compile()
+  + predict()
+  + save_weights()
+}
+
+class ImageProcessor {
+  + resize_image(img_path: str): ndarray
+  + preprocess_image(image: ndarray): ndarray
+}
+
+SkinCancerPredictor --> Flask: uses
+SkinCancerPredictor --> EfficientNetModel: uses
+SkinCancerPredictor --> ImageProcessor: uses
+
+note right of SkinCancerPredictor
+  Main application class that
+  coordinates all components
+end note
+
+note right of EfficientNetModel
+  Deep learning model for
+  skin cancer classification
+end note
+
+@enduml 

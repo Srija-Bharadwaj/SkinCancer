@@ -1,0 +1,38 @@
+@startuml Skin Cancer Prediction - Component Diagram
+
+package "Skin Cancer Prediction App" {
+  [Flask Web Server] as server
+  [Templates] as templates
+  [Static Files] as static
+  [EfficientNet Model] as model
+  [Image Processor] as processor
+  [Upload Handler] as uploader
+  
+  database "Uploads Directory" as uploads
+  
+  [Web Browser] --> server: HTTP
+  server --> templates: renders
+  server --> static: serves
+  server --> uploader: uses
+  uploader --> uploads: stores
+  server --> processor: uses
+  processor --> model: feeds
+  model --> server: predictions
+}
+
+note right of server
+  Handles HTTP requests
+  and routes
+end note
+
+note right of model
+  Deep learning model
+  for classification
+end note
+
+note right of processor
+  Image preprocessing
+  and resizing
+end note
+
+@enduml 

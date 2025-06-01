@@ -1,0 +1,32 @@
+@startuml Skin Cancer Prediction - Sequence Diagram
+
+actor User
+participant "Web Browser" as Browser
+participant "Flask Server" as Server
+participant "Model Predictor" as Predictor
+participant "EfficientNet Model" as Model
+
+User -> Browser: Upload image
+Browser -> Server: POST /predict
+Server -> Server: Save image to uploads/
+Server -> Predictor: model_predict(img_path)
+Predictor -> Model: Load model
+Predictor -> Predictor: Preprocess image
+Predictor -> Model: Predict class
+Model --> Predictor: Raw predictions
+Predictor -> Predictor: Convert to class name
+Predictor --> Server: Prediction result
+Server --> Browser: Display result
+Browser --> User: Show prediction
+
+note right of Model
+  EfficientNetB3 with
+  custom top layers
+end note
+
+note right of Predictor
+  Handles image preprocessing
+  and model coordination
+end note
+
+@enduml 
